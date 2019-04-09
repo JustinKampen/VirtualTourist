@@ -68,6 +68,8 @@ class PhotoAlbumViewController: UIViewController, NSFetchedResultsControllerDele
         if photoArray.isEmpty {
             FlickrClient.getPhotosForLocation(latitude: String(pin.latitude), longitude: String(pin.longitude), page: 1, completion: handlePhotoDataResponse(photos:page:error:))
         }
+        print("PIN LAT:  \(pin.latitude)")
+        print("PIN LON:  \(pin.longitude)")
     }
     
     @IBAction func newCollectionButtonTapped(_ sender: Any) {
@@ -77,7 +79,7 @@ class PhotoAlbumViewController: UIViewController, NSFetchedResultsControllerDele
         setupFetchedResultsController()
         collectionView.reloadInputViews()
         
-        let photoPage = Int.random(in: 1...(maxPages ?? 1))
+        let photoPage = Int.random(in: 1...20)
         newCollectionButton.isEnabled = false
         FlickrClient.getPhotosForLocation(latitude: String(pin.latitude), longitude: String(pin.longitude), page: photoPage, completion: handlePhotoDataResponse(photos:page:error:))
     }

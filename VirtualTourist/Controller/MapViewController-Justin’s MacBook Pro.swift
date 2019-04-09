@@ -74,27 +74,46 @@ class MapViewController: UIViewController, NSFetchedResultsControllerDelegate {
     }
     
     @IBAction func mapViewPressed(_ sender: UILongPressGestureRecognizer) {
-        var pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+        let pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
         let annotation = MKPointAnnotation()
-        
+        annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
         if sender.state == .began {
-            pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+            // add a PIN to the map
             annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
         } else if sender.state == .changed {
-            pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
+            // update the PIN to the new location
             annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
         } else if sender.state == .ended {
-            annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
+            // save this PIN to CoreData
             mapView.addAnnotation(annotation)
+            print(pressPoint.latitude)
+            print(pressPoint.longitude)
             let pin = Pin(context: dataController.viewContext)
             pin.creationDate = Date()
             pin.latitude = pressPoint.latitude
             pin.longitude = pressPoint.longitude
-            print(pin.latitude)
-            print(pin.longitude)
             try? dataController.viewContext.save()
         }
     }
+    
+    func addPinToLocation(withCoordinates coordinates: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+        mapView.addAnnotation(annotation)
+    }
+    
+    
+    
+//    func addPinLocation(withCoordinates coordinates: CLLocationCoordinate2D) {
+//        let annotation = MKPointAnnotation()
+//        annotation.coordinate = CLLocationCoordinate2D(latitude: coordinates.latitude, longitude: coordinates.longitude)
+//        mapView.addAnnotation(annotation)
+//        let pin = Pin(context: dataController.viewContext)
+//        pin.creationDate = Date()
+//        pin.latitude = coordinates.latitude
+//        pin.longitude = coordinates.longitude
+//        try? dataController.viewContext.save()
+//    }
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: true)
