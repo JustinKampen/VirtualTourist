@@ -64,7 +64,7 @@ class PhotoAlbumViewController: UIViewController, NSFetchedResultsControllerDele
         displaySelectedPin(withSelectedPin: pin)
         setupCollectionViewSpacing()
         photoArray = fetchedResultsController.fetchedObjects ?? []
-
+        
         if photoArray.isEmpty {
             FlickrClient.getPhotosForLocation(latitude: String(pin.latitude), longitude: String(pin.longitude), page: 1, completion: handlePhotoDataResponse(photos:page:error:))
         }

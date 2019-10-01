@@ -74,22 +74,23 @@ class MapViewController: UIViewController, NSFetchedResultsControllerDelegate {
     }
     
     @IBAction func mapViewPressed(_ sender: UILongPressGestureRecognizer) {
-        var pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
-        let annotation = MKPointAnnotation()
+        let location = sender.location(in: mapView)
+        let locCoord = mapView.convert(location, toCoordinateFrom: mapView)
+        let pinAnnotation = MKPointAnnotation()
         
         if sender.state == .began {
-            pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
-            annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
+            pinAnnotation.coordinate = locCoord
+            print("\(#function) Coordinate: \(locCoord.latitude),\(locCoord.longitude)")
+            mapView.addAnnotation(pinAnnotation)
         } else if sender.state == .changed {
-            pressPoint = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
-            annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
+            print("changed")
+            pinAnnotation.coordinate = locCoord
         } else if sender.state == .ended {
-            annotation.coordinate = CLLocationCoordinate2D(latitude: pressPoint.latitude, longitude: pressPoint.longitude)
-            mapView.addAnnotation(annotation)
+            print("ended")
             let pin = Pin(context: dataController.viewContext)
             pin.creationDate = Date()
-            pin.latitude = pressPoint.latitude
-            pin.longitude = pressPoint.longitude
+            pin.latitude = locCoord.latitude
+            pin.longitude = locCoord.longitude
             print(pin.latitude)
             print(pin.longitude)
             try? dataController.viewContext.save()

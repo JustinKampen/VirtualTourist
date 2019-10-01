@@ -38,6 +38,7 @@
 		D09890DC224C6C4A007CC659 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		D09890DF224C7F3C007CC659 /* FlickrClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		D09890E1224C7F63007CC659 /* PhotoAlbumCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCollectionViewCell.swift; sourceTree = "<group>"; };
+		D0B91F632342A6DD006CE396 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +80,7 @@
 		D09890B3224C6612007CC659 = {
 			isa = PBXGroup;
 			children = (
+				D0B91F632342A6DD006CE396 /* README.md */,
 				D09890BE224C6612007CC659 /* VirtualTourist */,
 				D09890BD224C6612007CC659 /* Products */,
 			);
